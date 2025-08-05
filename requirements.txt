@@ -1,4 +1,8 @@
 Flask
-scikit-learn
+Flask-Cors
 pandas
+scikit-learn
+matplotlib
+imbalanced-learn
+seaborn
 joblib

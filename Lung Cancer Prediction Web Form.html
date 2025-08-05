@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lung Cancer Prediction</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .container {
+            max-width: 900px;
+        }
+        .card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #10b981; /* Tailwind's emerald-500 */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* Style for disabled input fields */
+        input:disabled, select:disabled {
+            background-color: #e5e7eb;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+    <main class="container mx-auto p-8 rounded-2xl card">
+        <!-- Header Section -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800 flex items-center justify-center space-x-2">
+                <i data-lucide="lungs" class="text-emerald-500 w-8 h-8"></i>
+                <span>Lung Cancer Prediction</span>
+            </h1>
+            <p class="text-gray-600 mt-2">
+                Enter the patient's information to get a prediction on their lung cancer risk.
+            </p>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Form Section -->
+            <div class="col-span-1">
+                <form id="predictionForm" class="space-y-6">
+                    <!-- Age Input -->
+                    <div>
+                        <label for="age" class="block text-sm font-medium text-gray-700">Age</label>
+                        <input type="number" id="age" name="age" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                    </div>
+
+                    <!-- Gender Select -->
+                    <div>
+                        <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
+                        <select id="gender" name="gender" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <!-- Smoker Select -->
+                    <div>
+                        <label for="smoker" class="block text-sm font-medium text-gray-700">Smoker</label>
+                        <select id="smoker" name="smoker" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Is the patient a smoker?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Years of Smoking -->
+                    <div>
+                        <label for="years_of_smoking" class="block text-sm font-medium text-gray-700">Years of Smoking</label>
+                        <input type="number" id="years_of_smoking" name="years_of_smoking" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                    </div>
+
+                    <!-- Cigarettes per Day -->
+                    <div>
+                        <label for="cigarettes_per_day" class="block text-sm font-medium text-gray-700">Cigarettes per Day</label>
+                        <input type="number" id="cigarettes_per_day" name="cigarettes_per_day" required
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                    </div>
+
+                    <!-- Passive Smoker Select -->
+                    <div>
+                        <label for="passive_smoker" class="block text-sm font-medium text-gray-700">Passive Smoker</label>
+                        <select id="passive_smoker" name="passive_smoker" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Is the patient a passive smoker?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Family History Select -->
+                    <div>
+                        <label for="family_history" class="block text-sm font-medium text-gray-700">Family History</label>
+                        <select id="family_history" name="family_history" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Does the patient have a family history?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Healthcare Access Select -->
+                    <div>
+                        <label for="healthcare_access" class="block text-sm font-medium text-gray-700">Healthcare Access</label>
+                        <select id="healthcare_access" name="healthcare_access" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Does the patient have good healthcare access?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Occupational Exposure Select -->
+                    <div>
+                        <label for="occupational_exposure" class="block text-sm font-medium text-gray-700">Occupational Exposure</label>
+                        <select id="occupational_exposure" name="occupational_exposure" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Does the patient have occupational exposure?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Indoor Pollution Select -->
+                    <div>
+                        <label for="indoor_pollution" class="block text-sm font-medium text-gray-700">Indoor Pollution</label>
+                        <select id="indoor_pollution" name="indoor_pollution" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Is the patient exposed to indoor pollution?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+
+                    <!-- Air Pollution Exposure Select -->
+                    <div>
+                        <label for="air_pollution_exposure" class="block text-sm font-medium text-gray-700">Air Pollution Exposure</label>
+                        <select id="air_pollution_exposure" name="air_pollution_exposure" required
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm p-2 transition-colors">
+                            <option value="" disabled selected>Select exposure level</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Buttons -->
+                    <div class="flex space-x-4 mt-6">
+                        <button type="submit"
+                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition-colors">
+                            Predict
+                        </button>
+                        <button type="reset" id="resetBtn"
+                                class="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors">
+                            Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div class="col-span-1 p-6 flex flex-col space-y-4 rounded-xl transition-all duration-300" id="resultsCard">
+                <div id="loading" class="hidden flex flex-col items-center justify-center p-8 text-gray-500">
+                    <div class="loading-spinner"></div>
+                    <p class="mt-4 text-lg font-medium">Processing your request...</p>
+                </div>
+                
+                <div id="predictionResult" class="hidden">
+                    <h3 class="text-2xl font-semibold text-center text-gray-800 mb-4">Prediction Result</h3>
+                    <div class="p-4 rounded-xl transition-all duration-300">
+                        <p class="text-lg font-semibold text-gray-700">Risk Prediction:</p>
+                        <div id="resultText" class="text-3xl font-bold mt-2 text-center"></div>
+                    </div>
+                    
+                    <div class="mt-6 space-y-4">
+                        <p class="text-lg font-semibold text-gray-700">Prediction Probabilities:</p>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                            <span class="text-gray-600">No Cancer:</span>
+                            <span id="probNoCancer" class="text-xl font-bold text-gray-800"></span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                            <span class="text-gray-600">Cancer:</span>
+                            <span id="probCancer" class="text-xl font-bold text-gray-800"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Box -->
+        <div id="messageBox" class="mt-8 hidden p-4 rounded-md shadow-sm" role="alert">
+            <div class="flex items-start">
+                <i id="messageIcon" class="w-5 h-5 text-current"></i>
+                <div class="ml-3">
+                    <p id="messageText" class="text-sm font-medium"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:5000/predict';
+        const form = document.getElementById('predictionForm');
+        const resultsCard = document.getElementById('resultsCard');
+        const loadingSpinner = document.getElementById('loading');
+        const predictionResult = document.getElementById('predictionResult');
+        const resultText = document.getElementById('resultText');
+        const probNoCancer = document.getElementById('probNoCancer');
+        const probCancer = document.getElementById('probCancer');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+        const messageIcon = document.getElementById('messageIcon');
+        const resetBtn = document.getElementById('resetBtn');
+        const smokerSelect = document.getElementById('smoker');
+        const yearsOfSmokingInput = document.getElementById('years_of_smoking');
+        const cigarettesPerDayInput = document.getElementById('cigarettes_per_day');
+
+        function showMessage(type, text) {
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700');
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-700');
+                messageIcon.innerHTML = `<i data-lucide="check-circle" class="w-5 h-5"></i>`;
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-700');
+                messageIcon.innerHTML = `<i data-lucide="alert-circle" class="w-5 h-5"></i>`;
+            }
+            messageText.textContent = text;
+            lucide.createIcons();
+        }
+
+        function resetPage() {
+            form.reset();
+            predictionResult.classList.add('hidden');
+            resultsCard.classList.remove('bg-green-50', 'bg-red-50');
+            messageBox.classList.add('hidden');
+            yearsOfSmokingInput.disabled = false;
+            cigarettesPerDayInput.disabled = false;
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            predictionResult.classList.add('hidden');
+            messageBox.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            const payload = {
+                age: parseInt(data.age),
+                gender: data.gender,
+                smoker: data.smoker,
+                years_of_smoking: parseInt(data.years_of_smoking),
+                cigarettes_per_day: parseInt(data.cigarettes_per_day),
+                passive_smoker: data.passive_smoker,
+                family_history: data.family_history,
+                healthcare_access: data.healthcare_access,
+                occupational_exposure: data.occupational_exposure,
+                indoor_pollution: data.indoor_pollution,
+                air_pollution_exposure: data.air_pollution_exposure,
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+
+                if (!response.ok || result.status === 'error') {
+                    throw new Error(result.error || 'Something went wrong.');
+                }
+                
+                predictionResult.classList.remove('hidden');
+                resultText.textContent = result.prediction === 'Yes' ? 'High Risk' : 'Low Risk';
+                
+                const probNo = (result.probability_no_cancer * 100).toFixed(2) + '%';
+                const probYes = (result.probability_cancer * 100).toFixed(2) + '%';
+                
+                probNoCancer.textContent = probNo;
+                probCancer.textContent = probYes;
+                
+                if (result.prediction === 'Yes') {
+                    resultsCard.classList.add('bg-red-50');
+                    resultsCard.classList.remove('bg-green-50');
+                    resultText.classList.remove('text-emerald-600');
+                    resultText.classList.add('text-red-600');
+                } else {
+                    resultsCard.classList.add('bg-green-50');
+                    resultsCard.classList.remove('bg-red-50');
+                    resultText.classList.remove('text-red-600');
+                    resultText.classList.add('text-emerald-600');
+                }
+
+            } catch (error) {
+                showMessage('error', `Error: ${error.message}`);
+                predictionResult.classList.add('hidden');
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+
+        resetBtn.addEventListener('click', resetPage);
+        smokerSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'No') {
+                yearsOfSmokingInput.value = 0;
+                cigarettesPerDayInput.value = 0;
+                yearsOfSmokingInput.disabled = true;
+                cigarettesPerDayInput.disabled = true;
+            } else {
+                yearsOfSmokingInput.disabled = false;
+                cigarettesPerDayInput.disabled = false;
+            }
+        });
+
+        window.addEventListener('load', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
