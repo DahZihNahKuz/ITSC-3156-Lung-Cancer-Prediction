@@ -1,0 +1,1052 @@
+✅ Logger activated.
+--- Starting execution time measurement ---
+--- Attempting to load the dataset ---
+Attempting to load from local path: lung_cancer_prediction_dataset.csv
+Dataset loaded successfully from local path.
+
+Proceeding with a DataFrame of shape: (220632, 24)
+
+--- Dataset Size Selection ---
+Selected to use the FULL original dataset. Current dataset size: 220632 rows.
+
+Proceeding with a DataFrame of shape: (220632, 24)
+
+Dataset Info:
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 220632 entries, 0 to 220631
+Data columns (total 24 columns):
+ #   Column                       Non-Null Count   Dtype  
+---  ------                       --------------   -----  
+ 0   ID                           220632 non-null  int64  
+ 1   Country                      220632 non-null  object 
+ 2   Population_Size              220632 non-null  int64  
+ 3   Age                          220632 non-null  int64  
+ 4   Gender                       220632 non-null  object 
+ 5   Smoker                       220632 non-null  object 
+ 6   Years_of_Smoking             220632 non-null  int64  
+ 7   Cigarettes_per_Day           220632 non-null  int64  
+ 8   Passive_Smoker               220632 non-null  object 
+ 9   Family_History               220632 non-null  object 
+ 10  Lung_Cancer_Diagnosis        220632 non-null  object 
+ 11  Cancer_Stage                 8961 non-null    object 
+ 12  Survival_Years               220632 non-null  int64  
+ 13  Adenocarcinoma_Type          220632 non-null  object 
+ 14  Air_Pollution_Exposure       220632 non-null  object 
+ 15  Occupational_Exposure        220632 non-null  object 
+ 16  Indoor_Pollution             220632 non-null  object 
+ 17  Healthcare_Access            220632 non-null  object 
+ 18  Early_Detection              220632 non-null  object 
+ 19  Treatment_Type               6664 non-null    object 
+ 20  Developed_or_Developing      220632 non-null  object 
+ 21  Annual_Lung_Cancer_Deaths    220632 non-null  int64  
+ 22  Lung_Cancer_Prevalence_Rate  220632 non-null  float64
+ 23  Mortality_Rate               220632 non-null  float64
+dtypes: float64(2), int64(7), object(15)
+memory usage: 40.4+ MB
+
+Descriptive Statistics for Numerical Features:
+                  ID  Population_Size            Age  Years_of_Smoking  \
+count  220632.000000    220632.000000  220632.000000     220632.000000   
+mean   110315.500000       229.779882      52.518352          8.175274   
+std     63691.116633       349.247477      19.078215         12.377248   
+min         0.000000        54.000000      20.000000          0.000000   
+25%     55157.750000        83.000000      36.000000          0.000000   
+50%    110315.500000       113.000000      53.000000          0.000000   
+75%    165473.250000       206.000000      69.000000         15.000000   
+max    220631.000000      1400.000000      85.000000         40.000000   
+
+       Cigarettes_per_Day  Survival_Years  Annual_Lung_Cancer_Deaths  \
+count       220632.000000   220632.000000              220632.000000   
+mean             7.007515        0.223526               63931.086928   
+std              9.802187        1.231025              130690.126777   
+min              0.000000        0.000000               10005.000000   
+25%              0.000000        0.000000               23000.000000   
+50%              0.000000        0.000000               30000.000000   
+75%             14.000000        0.000000               45000.000000   
+max             30.000000       10.000000              690000.000000   
+
+       Lung_Cancer_Prevalence_Rate  Mortality_Rate  
+count                220632.000000   220632.000000  
+mean                      1.502085        3.049802  
+std                       0.578043       14.924169  
+min                       0.500000        0.000000  
+25%                       1.000000        0.000000  
+50%                       1.500000        0.000000  
+75%                       2.000000        0.000000  
+max                       2.500000       90.000000  
+
+--- Columns Cleaning ---
+
+--- Columns after initial cleaning ---
+['id', 'country', 'population_size', 'age', 'gender', 'smoker', 'years_of_smoking', 'cigarettes_per_day', 'passive_smoker', 'family_history', 'lung_cancer_diagnosis', 'cancer_stage', 'survival_years', 'adenocarcinoma_type', 'air_pollution_exposure', 'occupational_exposure', 'indoor_pollution', 'healthcare_access', 'early_detection', 'treatment_type', 'developed_or_developing', 'annual_lung_cancer_deaths', 'lung_cancer_prevalence_rate', 'mortality_rate']
+
+--- Initial Missing Values Check ---
+id                                  0
+country                             0
+population_size                     0
+age                                 0
+gender                              0
+smoker                              0
+years_of_smoking                    0
+cigarettes_per_day                  0
+passive_smoker                      0
+family_history                      0
+lung_cancer_diagnosis               0
+cancer_stage                   211671
+survival_years                      0
+adenocarcinoma_type                 0
+air_pollution_exposure              0
+occupational_exposure               0
+indoor_pollution                    0
+healthcare_access                   0
+early_detection                     0
+treatment_type                 213968
+developed_or_developing             0
+annual_lung_cancer_deaths           0
+lung_cancer_prevalence_rate         0
+mortality_rate                      0
+dtype: int64
+
+Dropped columns: ['cancer_stage', 'treatment_type']
+New Dataset Shape: (220632, 22)
+
+--- Missing Values Check After Dropping Columns ---
+id                             0
+country                        0
+population_size                0
+age                            0
+gender                         0
+smoker                         0
+years_of_smoking               0
+cigarettes_per_day             0
+passive_smoker                 0
+family_history                 0
+lung_cancer_diagnosis          0
+survival_years                 0
+adenocarcinoma_type            0
+air_pollution_exposure         0
+occupational_exposure          0
+indoor_pollution               0
+healthcare_access              0
+early_detection                0
+developed_or_developing        0
+annual_lung_cancer_deaths      0
+lung_cancer_prevalence_rate    0
+mortality_rate                 0
+dtype: int64
+
+Further dropped columns: ['id', 'country', 'population_size', 'annual_lung_cancer_deaths', 'lung_cancer_prevalence_rate', 'mortality_rate', 'survival_years', 'developed_or_developing']
+New Dataset Shape after feature selection: (220632, 14)
+
+Remaining columns: ['age', 'gender', 'smoker', 'years_of_smoking', 'cigarettes_per_day', 'passive_smoker', 'family_history', 'lung_cancer_diagnosis', 'adenocarcinoma_type', 'air_pollution_exposure', 'occupational_exposure', 'indoor_pollution', 'healthcare_access', 'early_detection']
+
+--- Starting New Feature Engineering ---
+
+--- Missing Values Check Before Encoding/Scaling ---
+age                           0
+gender                        0
+smoker                        0
+years_of_smoking              0
+cigarettes_per_day            0
+passive_smoker                0
+family_history                0
+adenocarcinoma_type           0
+air_pollution_exposure        0
+occupational_exposure         0
+indoor_pollution              0
+healthcare_access             0
+early_detection               0
+total_cigarettes_smoked       0
+smoking_age_interaction       0
+air_pollution_exposure_num    0
+occupational_exposure_num     0
+indoor_pollution_num          0
+environmental_risk_score      0
+dtype: int64
+
+DataFrame with new features saved to 'lung_cancer_prediction_with_features.csv'
+Original 'lung_cancer_diagnosis' classes mapped to: ['No' 'Yes'] -> [0 1]
+
+--- Binary Encoding ---
+Mapped binary column 'gender'.
+Mapped binary column 'smoker'.
+Mapped binary column 'passive_smoker'.
+Mapped binary column 'family_history'.
+Mapped binary column 'adenocarcinoma_type'.
+Mapped binary column 'early_detection'.
+
+--- Ordinal Encoding ---
+Mapped ordinal column 'healthcare_access'.
+
+--- One-Hot Encoding ---
+No multi-category nominal columns for One-Hot Encoding.
+
+Shape after all Encoding: (220632, 19)
+First 5 rows of encoded features (X_encoded):
+
+--- Scaling Numerical Features ---
+Applied StandardScaler to: ['age', 'years_of_smoking', 'cigarettes_per_day', 'total_cigarettes_smoked', 'smoking_age_interaction', 'environmental_risk_score']
+
+First 5 rows of scaled features (X_scaled):
+
+Descriptive Statistics for Scaled Numerical Features:
+
+--- Exploratory Data Analysis (EDA) ---
+
+- Distribution of Numerical Features:
+
+- Count Plots for Key Categorical Features:
+
+- Distribution of Lung Cancer Diagnosis:
+
+- Correlation Heatmap of Features:
+
+Shape of X_train: (176505, 13)
+y_train class distribution:
+0    169336
+1      7169
+Name: count, dtype: int64
+
+--- Applying SMOTE ---
+Resampled shape: (338672, 13)
+Resampled class counts: Counter({np.int64(0): 169336, np.int64(1): 169336})
+
+--- Evaluating all models on SMOTE resampled data ---
+
+Random Forest on SMOTE:
+Accuracy: 0.9187
+F1-score (Cancer): 0.0612
+Recall (Cancer): 0.0653
+              precision    recall  f1-score   support
+
+           0       0.96      0.95      0.96     42335
+           1       0.06      0.07      0.06      1792
+
+    accuracy                           0.92     44127
+   macro avg       0.51      0.51      0.51     44127
+weighted avg       0.92      0.92      0.92     44127
+
+
+Logistic Regression on SMOTE:
+Accuracy: 0.6255
+F1-score (Cancer): 0.1275
+Recall (Cancer): 0.6741
+              precision    recall  f1-score   support
+
+           0       0.98      0.62      0.76     42335
+           1       0.07      0.67      0.13      1792
+
+    accuracy                           0.63     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.63      0.74     44127
+
+
+Linear SVM on SMOTE:
+Accuracy: 0.6224
+F1-score (Cancer): 0.1275
+Recall (Cancer): 0.6797
+              precision    recall  f1-score   support
+
+           0       0.98      0.62      0.76     42335
+           1       0.07      0.68      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+Decision Tree on SMOTE:
+Accuracy: 0.9152
+F1-score (Cancer): 0.0640
+Recall (Cancer): 0.0714
+              precision    recall  f1-score   support
+
+           0       0.96      0.95      0.96     42335
+           1       0.06      0.07      0.06      1792
+
+    accuracy                           0.92     44127
+   macro avg       0.51      0.51      0.51     44127
+weighted avg       0.92      0.92      0.92     44127
+
+
+KNN on SMOTE:
+Accuracy: 0.8299
+F1-score (Cancer): 0.1089
+Recall (Cancer): 0.2561
+              precision    recall  f1-score   support
+
+           0       0.96      0.85      0.91     42335
+           1       0.07      0.26      0.11      1792
+
+    accuracy                           0.83     44127
+   macro avg       0.52      0.56      0.51     44127
+weighted avg       0.93      0.83      0.87     44127
+
+
+Naive Bayes on SMOTE:
+Accuracy: 0.6586
+F1-score (Cancer): 0.1240
+Recall (Cancer): 0.5949
+              precision    recall  f1-score   support
+
+           0       0.97      0.66      0.79     42335
+           1       0.07      0.59      0.12      1792
+
+    accuracy                           0.66     44127
+   macro avg       0.52      0.63      0.46     44127
+weighted avg       0.94      0.66      0.76     44127
+
+
+Gradient Boosting on SMOTE:
+Accuracy: 0.7444
+F1-score (Cancer): 0.1192
+Recall (Cancer): 0.4258
+              precision    recall  f1-score   support
+
+           0       0.97      0.76      0.85     42335
+           1       0.07      0.43      0.12      1792
+
+    accuracy                           0.74     44127
+   macro avg       0.52      0.59      0.48     44127
+weighted avg       0.93      0.74      0.82     44127
+
+
+XGBoost on SMOTE:
+Accuracy: 0.9591
+F1-score (Cancer): 0.0033
+Recall (Cancer): 0.0017
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.14      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.55      0.50      0.49     44127
+weighted avg       0.93      0.96      0.94     44127
+
+
+--- Applying ADASYN ---
+Resampled shape: (337474, 13)
+Resampled class counts: Counter({np.int64(0): 169336, np.int64(1): 168138})
+
+--- Evaluating all models on ADASYN resampled data ---
+
+Random Forest on ADASYN:
+Accuracy: 0.9194
+F1-score (Cancer): 0.0612
+Recall (Cancer): 0.0647
+              precision    recall  f1-score   support
+
+           0       0.96      0.96      0.96     42335
+           1       0.06      0.06      0.06      1792
+
+    accuracy                           0.92     44127
+   macro avg       0.51      0.51      0.51     44127
+weighted avg       0.92      0.92      0.92     44127
+
+
+Logistic Regression on ADASYN:
+Accuracy: 0.6275
+F1-score (Cancer): 0.1272
+Recall (Cancer): 0.6685
+              precision    recall  f1-score   support
+
+           0       0.98      0.63      0.76     42335
+           1       0.07      0.67      0.13      1792
+
+    accuracy                           0.63     44127
+   macro avg       0.52      0.65      0.45     44127
+weighted avg       0.94      0.63      0.74     44127
+
+
+Linear SVM on ADASYN:
+Accuracy: 0.6241
+F1-score (Cancer): 0.1275
+Recall (Cancer): 0.6763
+              precision    recall  f1-score   support
+
+           0       0.98      0.62      0.76     42335
+           1       0.07      0.68      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+Decision Tree on ADASYN:
+Accuracy: 0.9155
+F1-score (Cancer): 0.0571
+Recall (Cancer): 0.0631
+              precision    recall  f1-score   support
+
+           0       0.96      0.95      0.96     42335
+           1       0.05      0.06      0.06      1792
+
+    accuracy                           0.92     44127
+   macro avg       0.51      0.51      0.51     44127
+weighted avg       0.92      0.92      0.92     44127
+
+
+KNN on ADASYN:
+Accuracy: 0.8280
+F1-score (Cancer): 0.1098
+Recall (Cancer): 0.2612
+              precision    recall  f1-score   support
+
+           0       0.96      0.85      0.90     42335
+           1       0.07      0.26      0.11      1792
+
+    accuracy                           0.83     44127
+   macro avg       0.52      0.56      0.51     44127
+weighted avg       0.93      0.83      0.87     44127
+
+
+Naive Bayes on ADASYN:
+Accuracy: 0.6603
+F1-score (Cancer): 0.1243
+Recall (Cancer): 0.5938
+              precision    recall  f1-score   support
+
+           0       0.97      0.66      0.79     42335
+           1       0.07      0.59      0.12      1792
+
+    accuracy                           0.66     44127
+   macro avg       0.52      0.63      0.46     44127
+weighted avg       0.94      0.66      0.76     44127
+
+
+Gradient Boosting on ADASYN:
+Accuracy: 0.7498
+F1-score (Cancer): 0.1179
+Recall (Cancer): 0.4118
+              precision    recall  f1-score   support
+
+           0       0.97      0.76      0.85     42335
+           1       0.07      0.41      0.12      1792
+
+    accuracy                           0.75     44127
+   macro avg       0.52      0.59      0.49     44127
+weighted avg       0.93      0.75      0.82     44127
+
+
+XGBoost on ADASYN:
+Accuracy: 0.9584
+F1-score (Cancer): 0.0022
+Recall (Cancer): 0.0011
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.04      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.50      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+--- Applying RandomOverSampler ---
+Resampled shape: (338672, 13)
+Resampled class counts: Counter({np.int64(0): 169336, np.int64(1): 169336})
+
+--- Evaluating all models on RandomOverSampler resampled data ---
+
+Random Forest on RandomOverSampler:
+Accuracy: 0.8648
+F1-score (Cancer): 0.0283
+Recall (Cancer): 0.0485
+              precision    recall  f1-score   support
+
+           0       0.96      0.90      0.93     42335
+           1       0.02      0.05      0.03      1792
+
+    accuracy                           0.86     44127
+   macro avg       0.49      0.47      0.48     44127
+weighted avg       0.92      0.86      0.89     44127
+
+
+Logistic Regression on RandomOverSampler:
+Accuracy: 0.6167
+F1-score (Cancer): 0.1276
+Recall (Cancer): 0.6903
+              precision    recall  f1-score   support
+
+           0       0.98      0.61      0.75     42335
+           1       0.07      0.69      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+Linear SVM on RandomOverSampler:
+Accuracy: 0.6167
+F1-score (Cancer): 0.1276
+Recall (Cancer): 0.6903
+              precision    recall  f1-score   support
+
+           0       0.98      0.61      0.75     42335
+           1       0.07      0.69      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+Decision Tree on RandomOverSampler:
+Accuracy: 0.8435
+F1-score (Cancer): 0.0487
+Recall (Cancer): 0.0988
+              precision    recall  f1-score   support
+
+           0       0.96      0.87      0.91     42335
+           1       0.03      0.10      0.05      1792
+
+    accuracy                           0.84     44127
+   macro avg       0.50      0.49      0.48     44127
+weighted avg       0.92      0.84      0.88     44127
+
+
+KNN on RandomOverSampler:
+Accuracy: 0.8862
+F1-score (Cancer): 0.1000
+Recall (Cancer): 0.1557
+              precision    recall  f1-score   support
+
+           0       0.96      0.92      0.94     42335
+           1       0.07      0.16      0.10      1792
+
+    accuracy                           0.89     44127
+   macro avg       0.52      0.54      0.52     44127
+weighted avg       0.93      0.89      0.91     44127
+
+
+Naive Bayes on RandomOverSampler:
+Accuracy: 0.6476
+F1-score (Cancer): 0.1256
+Recall (Cancer): 0.6233
+              precision    recall  f1-score   support
+
+           0       0.98      0.65      0.78     42335
+           1       0.07      0.62      0.13      1792
+
+    accuracy                           0.65     44127
+   macro avg       0.52      0.64      0.45     44127
+weighted avg       0.94      0.65      0.75     44127
+
+
+Gradient Boosting on RandomOverSampler:
+Accuracy: 0.6215
+F1-score (Cancer): 0.1275
+Recall (Cancer): 0.6808
+              precision    recall  f1-score   support
+
+           0       0.98      0.62      0.76     42335
+           1       0.07      0.68      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+XGBoost on RandomOverSampler:
+Accuracy: 0.7345
+F1-score (Cancer): 0.1179
+Recall (Cancer): 0.4369
+              precision    recall  f1-score   support
+
+           0       0.97      0.75      0.84     42335
+           1       0.07      0.44      0.12      1792
+
+    accuracy                           0.73     44127
+   macro avg       0.52      0.59      0.48     44127
+weighted avg       0.93      0.73      0.81     44127
+
+
+--- Applying EditedNearestNeighbours (ENN) ---
+Resampled shape: (150575, 13)
+Resampled class counts: Counter({np.int64(0): 150572, np.int64(1): 3})
+
+--- Evaluating all models on EditedNearestNeighbours (ENN) resampled data ---
+
+Random Forest on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+Logistic Regression on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+Linear SVM on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+Decision Tree on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+KNN on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+Naive Bayes on EditedNearestNeighbours (ENN):
+Accuracy: 0.9542
+F1-score (Cancer): 0.0108
+Recall (Cancer): 0.0061
+              precision    recall  f1-score   support
+
+           0       0.96      0.99      0.98     42335
+           1       0.04      0.01      0.01      1792
+
+    accuracy                           0.95     44127
+   macro avg       0.50      0.50      0.49     44127
+weighted avg       0.92      0.95      0.94     44127
+
+
+Gradient Boosting on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+XGBoost on EditedNearestNeighbours (ENN):
+Accuracy: 0.9594
+F1-score (Cancer): 0.0000
+Recall (Cancer): 0.0000
+              precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+--- Applying SMOTEENN ---
+Resampled shape: (279806, 13)
+Resampled class counts: Counter({np.int64(1): 140023, np.int64(0): 139783})
+
+--- Evaluating all models on SMOTEENN resampled data ---
+
+Random Forest on SMOTEENN:
+Accuracy: 0.8495
+F1-score (Cancer): 0.0836
+Recall (Cancer): 0.1691
+              precision    recall  f1-score   support
+
+           0       0.96      0.88      0.92     42335
+           1       0.06      0.17      0.08      1792
+
+    accuracy                           0.85     44127
+   macro avg       0.51      0.52      0.50     44127
+weighted avg       0.92      0.85      0.88     44127
+
+
+Logistic Regression on SMOTEENN:
+Accuracy: 0.6187
+F1-score (Cancer): 0.1276
+Recall (Cancer): 0.6864
+              precision    recall  f1-score   support
+
+           0       0.98      0.62      0.76     42335
+           1       0.07      0.69      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+Linear SVM on SMOTEENN:
+Accuracy: 0.6169
+F1-score (Cancer): 0.1277
+Recall (Cancer): 0.6903
+              precision    recall  f1-score   support
+
+           0       0.98      0.61      0.75     42335
+           1       0.07      0.69      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+Decision Tree on SMOTEENN:
+Accuracy: 0.8956
+F1-score (Cancer): 0.0843
+Recall (Cancer): 0.1183
+              precision    recall  f1-score   support
+
+           0       0.96      0.93      0.94     42335
+           1       0.07      0.12      0.08      1792
+
+    accuracy                           0.90     44127
+   macro avg       0.51      0.52      0.51     44127
+weighted avg       0.92      0.90      0.91     44127
+
+
+KNN on SMOTEENN:
+Accuracy: 0.7722
+F1-score (Cancer): 0.1068
+Recall (Cancer): 0.3354
+              precision    recall  f1-score   support
+
+           0       0.97      0.79      0.87     42335
+           1       0.06      0.34      0.11      1792
+
+    accuracy                           0.77     44127
+   macro avg       0.51      0.56      0.49     44127
+weighted avg       0.93      0.77      0.84     44127
+
+
+Naive Bayes on SMOTEENN:
+Accuracy: 0.6509
+F1-score (Cancer): 0.1244
+Recall (Cancer): 0.6105
+              precision    recall  f1-score   support
+
+           0       0.98      0.65      0.78     42335
+           1       0.07      0.61      0.12      1792
+
+    accuracy                           0.65     44127
+   macro avg       0.52      0.63      0.45     44127
+weighted avg       0.94      0.65      0.76     44127
+
+
+Gradient Boosting on SMOTEENN:
+Accuracy: 0.7060
+F1-score (Cancer): 0.1212
+Recall (Cancer): 0.4994
+              precision    recall  f1-score   support
+
+           0       0.97      0.71      0.82     42335
+           1       0.07      0.50      0.12      1792
+
+    accuracy                           0.71     44127
+   macro avg       0.52      0.61      0.47     44127
+weighted avg       0.93      0.71      0.79     44127
+
+
+XGBoost on SMOTEENN:
+Accuracy: 0.9510
+F1-score (Cancer): 0.0226
+Recall (Cancer): 0.0140
+              precision    recall  f1-score   support
+
+           0       0.96      0.99      0.97     42335
+           1       0.06      0.01      0.02      1792
+
+    accuracy                           0.95     44127
+   macro avg       0.51      0.50      0.50     44127
+weighted avg       0.92      0.95      0.94     44127
+
+
+--- Comparing GridSearchCV vs. Bayesian Optimization for Logistic Regression ---
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+
+GridSearchCV Best parameters: {'C': 10}
+GridSearchCV Best F1-score: 0.7481
+GridSearchCV Time taken: 7.49 seconds
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+Fitting 5 folds for each of 1 candidates, totalling 5 fits
+
+BayesSearchCV Best parameters: OrderedDict([('C', 105.76211650904162)])
+BayesSearchCV Best F1-score: 0.7481
+BayesSearchCV Time taken: 21.28 seconds
+
+Final Evaluation of BayesSearchCV Best Model:
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.98      0.62      0.76     42335
+           1       0.07      0.69      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+--- Starting Hyperparameter Tuning with GridSearchCV on Models ---
+Shape of X_train after SMOTEENN: (279806, 13)
+y_train class distribution SMOTEENN:
+Original class counts: Counter({np.int64(0): 169336, np.int64(1): 7169})
+Resampled class counts: Counter({np.int64(1): 140023, np.int64(0): 139783})
+
+
+Searching for best hyperparameters for Logistic Regression...
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+--- Results for Logistic Regression ---
+Best parameters: {'C': 10}
+F1-score on test data: 0.1276
+Time taken: 3.38 seconds
+
+Searching for best hyperparameters for Linear SVM...
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+--- Results for Linear SVM ---
+Best parameters: {'C': 1}
+F1-score on test data: 0.1277
+Time taken: 2.89 seconds
+
+Searching for best hyperparameters for Gradient Boosting...
+Fitting 5 folds for each of 27 candidates, totalling 135 fits
+--- Results for Gradient Boosting ---
+Best parameters: {'learning_rate': 0.2, 'max_depth': 7, 'n_estimators': 200}
+F1-score on test data: 0.0064
+Time taken: 540.44 seconds
+
+--- Hyperparameter Tuning Summary ---
+
+Model: Logistic Regression
+  Best Parameters: {'C': 10}
+  Best F1-score (Cross-Validation): 0.7481
+  F1-score on Test Data: 0.1276
+  Time Taken: 3.38 seconds
+
+Model: Linear SVM
+  Best Parameters: {'C': 1}
+  Best F1-score (Cross-Validation): 0.7479
+  F1-score on Test Data: 0.1277
+  Time Taken: 2.89 seconds
+
+Model: Gradient Boosting
+  Best Parameters: {'learning_rate': 0.2, 'max_depth': 7, 'n_estimators': 200}
+  Best F1-score (Cross-Validation): 0.9753
+  F1-score on Test Data: 0.0064
+  Time Taken: 540.44 seconds
+
+--- Final Evaluation of the Overall Best Model: Linear SVM ---
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.98      0.61      0.75     42335
+           1       0.07      0.69      0.13      1792
+
+    accuracy                           0.62     44127
+   macro avg       0.52      0.65      0.44     44127
+weighted avg       0.94      0.62      0.73     44127
+
+
+--- Experiment 1: Hyperparameter Tuning with SMOTE Resampling ---
+
+Searching for best hyperparameters for Logistic Regression with SMOTE...
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+--- Results for Logistic Regression with SMOTE ---
+Best parameters: {'classifier__C': 0.1}
+Best F1-score (Cross-Validation): 0.1283
+F1-score on test data: 0.1277
+Time taken: 4.81 seconds
+
+Searching for best hyperparameters for Linear SVM with SMOTE...
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+--- Results for Linear SVM with SMOTE ---
+Best parameters: {'classifier__C': 0.001}
+Best F1-score (Cross-Validation): 0.1286
+F1-score on test data: 0.1276
+Time taken: 4.57 seconds
+
+Searching for best hyperparameters for Gradient Boosting with SMOTE...
+Fitting 5 folds for each of 27 candidates, totalling 135 fits
+--- Results for Gradient Boosting with SMOTE ---
+Best parameters: {'classifier__learning_rate': 0.01, 'classifier__max_depth': 5, 'classifier__n_estimators': 50}
+Best F1-score (Cross-Validation): 0.1278
+F1-score on test data: 0.1256
+Time taken: 599.28 seconds
+
+--- Experiment 2: Hyperparameter Tuning with Class Weights (No Resampling) ---
+
+Searching for best hyperparameters for Logistic Regression with Class Weights...
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+--- Results for Logistic Regression with Class Weights ---
+Best parameters: {'classifier__C': 0.001}
+Best F1-score (Cross-Validation): 0.1286
+F1-score on test data: 0.1276
+Time taken: 2.53 seconds
+
+Searching for best hyperparameters for Linear SVM with Class Weights...
+Fitting 5 folds for each of 6 candidates, totalling 30 fits
+--- Results for Linear SVM with Class Weights ---
+Best parameters: {'classifier__C': 0.001}
+Best F1-score (Cross-Validation): 0.1286
+F1-score on test data: 0.1276
+Time taken: 2.44 seconds
+
+--- All experiments concluded. Compare the results from the plots and printouts. ---
+Random Forest Accuracy: 0.9582
+Classification Report for Random Forest:
+               precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.07      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.51      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+Logistic Regression Accuracy: 0.9594
+Classification Report for Logistic Regression:
+               precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+Linear SVM Accuracy: 0.9594
+Classification Report for Linear SVM:
+               precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+Decision Tree Accuracy: 0.9276
+Classification Report for Decision Tree:
+               precision    recall  f1-score   support
+
+           0       0.96      0.96      0.96     42335
+           1       0.08      0.07      0.07      1792
+
+    accuracy                           0.93     44127
+   macro avg       0.52      0.52      0.52     44127
+weighted avg       0.92      0.93      0.93     44127
+
+KNN Accuracy: 0.9585
+Classification Report for KNN:
+               precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.13      0.00      0.01      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.54      0.50      0.49     44127
+weighted avg       0.93      0.96      0.94     44127
+
+Naive Bayes Accuracy: 0.8610
+Classification Report for Naive Bayes:
+               precision    recall  f1-score   support
+
+           0       0.96      0.89      0.92     42335
+           1       0.07      0.21      0.11      1792
+
+    accuracy                           0.86     44127
+   macro avg       0.52      0.55      0.52     44127
+weighted avg       0.93      0.86      0.89     44127
+
+Gradient Boosting Accuracy: 0.9594
+Classification Report for Gradient Boosting:
+               precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+XGBoost Accuracy: 0.9593
+Classification Report for XGBoost:
+               precision    recall  f1-score   support
+
+           0       0.96      1.00      0.98     42335
+           1       0.00      0.00      0.00      1792
+
+    accuracy                           0.96     44127
+   macro avg       0.48      0.50      0.49     44127
+weighted avg       0.92      0.96      0.94     44127
+
+
+--- Saving the Best Model and Preprocessor ---
+✅ Scaler saved to models\scaler.pkl
+✅ Label Encoder saved to models\label_encoder.pkl
+❌ Error occurred while saving model artifacts: name 'best_model' is not defined
+
+--- Total execution time: 16.21 seconds ---
